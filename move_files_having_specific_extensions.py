@@ -25,8 +25,13 @@ def compute(path, fileExt):
             if os.path.exists(move_path):
                 print("Moving......")
 
+                for foldername, subfolder, filename in os.walk(path):       # walks the each subfolder in the specified folder
+                    for file in filename:
+                        if file.endswith(fileExt):
+                            #shutil.move(os.path.join(foldername , file) , os.path.join(move_path , file)) # moves the file to the specified location without chaanging its filename
+                            print(os.path.join(foldername , file) + ' moved to : ' + os.path.join(move_path , file))
             else:
-                print("The path does not exist !!!")
+                print("The destination path does not exist !!!")
 
 
         elif sure_prompt == 'N':
