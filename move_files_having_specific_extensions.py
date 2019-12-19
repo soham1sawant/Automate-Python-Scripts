@@ -6,7 +6,7 @@
 
 # Take the path of the folder to move the files to from the user
 
-# TODO : Display a message that the files have succesfully been moved to the 'destination'
+# Display a message that the files have succesfully been moved to the 'destination'
 
 import os , shutil
 
@@ -34,15 +34,19 @@ def compute(path, fileExt):
                     for file in filename:
                         if file.endswith(fileExt):
                             shutil.move(os.path.join(foldername , file) , os.path.join(move_path , file)) # moves the file to the specified location without chaanging its filename
-                            #print(os.path.join(foldername , file) + ' moved to : ' + os.path.join(move_path , file))
+                
+                print("The files have succesfully been moved")
+
             else:
                 print("The destination path does not exist !!!")
 
 
         elif sure_prompt == 'N':
             print("Skipping......")
+            print()
         else:
             print("Wrong Input !!!")
+            print()
 
     else:
         print("The path does not exist !")
