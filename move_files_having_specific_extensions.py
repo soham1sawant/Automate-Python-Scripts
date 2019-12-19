@@ -2,13 +2,13 @@
 
 # This Program moves files having user entered extensions to a specific folder
 
-# TODO : Search all the directories in the folder for the filetype and display the filenames
+# Search all the directories in the folder for the filetype and display the filenames
 
-# TODO : Take the path of the folder to move the files to from the user
+# Take the path of the folder to move the files to from the user
 
 # TODO : Display a message that the files have succesfully been moved to the 'destination'
 
-import os
+import os , shutil
 
 def compute(path, fileExt):
     if os.path.exists(path):          # checks if the path entered by the user exists
@@ -18,6 +18,22 @@ def compute(path, fileExt):
             for file in filename:
                 if file.endswith(fileExt):
                     print(os.path.join(foldername , file))
+        sure_prompt = input("These files will be moved, are you sure? (Y/N) : ").strip().upper() # asks the user if he is sure about deleting the files
+
+        if sure_prompt == 'Y':
+            move_path = input("Enter the path to  move the files into : ")
+            if os.path.exists(move_path):
+                print("Moving......")
+
+            else:
+                print("The path does not exist !!!")
+
+
+        elif sure_prompt == 'N':
+            print("Skipping......")
+        else:
+            print("Wrong Input !!!")
+
     else:
         print("The path does not exist !")
 
