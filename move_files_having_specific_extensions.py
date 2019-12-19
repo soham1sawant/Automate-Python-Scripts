@@ -14,13 +14,14 @@ def compute(path, fileExt):
     if os.path.exists(path):          # checks if the path entered by the user exists
         print("The path exists")
 
-        for foldername, subfolder, filename in os.walk(path):
-            print("The folder is : " + foldername)
-            print("The subfolders in " + foldername + " are : " + str(subfolder) )
-            print("The files in " + subfolder + " are : " + str(filename) )
+        for foldername, subfolder, filename in os.walk(path):       # walks the each subfolder in the specified folder
+            for file in filename:
+                if file.endswith(fileExt):
+                    print(os.path.join(foldername , file))
     else:
-        print('The path does not exist')
+        print("The path does not exist !")
 
+            
 if __name__ == '__main__':
     print("Text-based file moving program")
     print()
