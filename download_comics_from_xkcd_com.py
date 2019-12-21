@@ -4,6 +4,41 @@
 
 import bs4 , requests
 
+def downloadImages(start , end , firstUrl):
+    savePath = input("Enter the path of folder to save images : ")
+
+    for i in range(1 , end + 1):
+        link = firstUrl[0] + '//' + firstUrl[2] + '/' + str(i) + '/'        # creates link page of each commic in site from start to finish
+        res1 = requests.get(link)
+        res1.raise_for_status()
+
+        soup = bs4.BeautifulSoup(res1.text , 'html.parser')             # parses only the html content of the filr 'res1'
+        Comicelem = soup.select("#comic > img")
+
+        if Comicelem == []:
+            print("Could not find Comic Image !!!")
+        else:
+            comicUrl = Comicelem[0].get('src').split('//')      # gets the URL of the image
+            comicUrl = comicUrl[1]                          # gets the URL of the image
+            comicUrl = 'https://' + comicUrl
+            
+            print("Downloading Image %s..." %(comicUrl))
+            Img = requests.get(comicUrl)                # downloads the comic image
+            Img.raise_for_status()
+
+            # Save the File to User Entered Path
+            imageFile = open(savePath + '/' + str(i) , 'wb')      # opens path to save the image file
+            for chunk in Img.iter_content(100000):              # saves the image file in chunks
+                imageFile.write(chunk)
+            imageFile.close()                       # closes the image file
+
+        dataFile = open(savePath + '/' + 'data' , 'w')
+        dataFile.write(str(end))                                 # writes the number of the last number of the comic file
+        
+        print("Download Complete !!!")
+        print()
+
+
 def downloadAll(firstUrl , lastUrl):
     firstUrl = firstUrl.split('/')
 
@@ -13,11 +48,10 @@ def downloadAll(firstUrl , lastUrl):
     soup = bs4.BeautifulSoup(res.text , 'html.parser')      # parser only the HTML of the page
     elems = str( soup.select('#middleContainer') ).split(' ')
     elems = elems[9].split('/')
-    elems = elems[1]
+    elems = int(elems[1])
 
+    downloadImages(firstUrl[3] , elems , firstUrl)
     
-
-
 
 def downloadNew(pageUrl):           # this function will download any new comics added to xkcd.com
     print(pageUrl)
