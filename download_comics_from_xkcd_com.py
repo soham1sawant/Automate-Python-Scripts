@@ -33,10 +33,10 @@ def downloadImages(start , end , firstUrl):
             imageFile.close()                       # closes the image file
 
         dataFile = open(savePath + '/' + 'data' , 'w')
-        dataFile.write(str(end))                                 # writes the number of the last number of the comic file
+        dataFile.write(str(i))                                 # writes the number of the last number of the comic file
         
-        print("Download Complete !!!")
-        print()
+    print("Download Complete !!!")
+    print()
 
 
 def downloadAll(firstUrl , lastUrl):
