@@ -7,7 +7,7 @@ import bs4 , requests
 def downloadImages(start , end , firstUrl):
     savePath = input("Enter the path of folder to save images : ")
 
-    for i in range(1 , end + 1):
+    for i in range( int(start) , end + 1 ):
         link = firstUrl[0] + '//' + firstUrl[2] + '/' + str(i) + '/'        # creates link page of each commic in site from start to finish
         res1 = requests.get(link)
         res1.raise_for_status()
@@ -43,18 +43,32 @@ def downloadAll(firstUrl , lastUrl):
     firstUrl = firstUrl.split('/')
 
     res = requests.get(lastUrl)        # downloads the page
-    res.raise_for_status()              # checks if th epage has been dowloaded successfully
+    res.raise_for_status()              # checks if the page has been dowloaded successfully
 
     soup = bs4.BeautifulSoup(res.text , 'html.parser')      # parser only the HTML of the page
-    elems = str( soup.select('#middleContainer') ).split(' ')
-    elems = elems[9].split('/')
-    elems = int(elems[1])
+    end = str( soup.select('#middleContainer') ).split(' ')
+    end = end[9].split('/')
+    end = int(end[1])
 
-    downloadImages(firstUrl[3] , elems , firstUrl)
+    downloadImages(firstUrl[3] , end , firstUrl)
     
 
-def downloadNew(pageUrl):           # this function will download any new comics added to xkcd.com
-    print(pageUrl)
+def downloadNew(firstUrl , lastUrl):           # this function will download any new comics added to xkcd.com
+    firstUrl = firstUrl.split('/')
+
+    res = requests.get(lastUrl)        # downloads the page
+    res.raise_for_status()              # checks if the page has been dowloaded successfully
+
+    soup = bs4.BeautifulSoup(res.text , 'html.parser')      # parser only the HTML of the page
+    end = str( soup.select('#middleContainer') ).split(' ')
+    end = end[9].split('/')
+    end = int(end[1])
+
+    dataPath = input("Enter the path of folder to save images : ")
+    start = dataPath.read().strip()
+
+    downloadImages(start , end , firstUrl)
+
 
 print("Download comics from xkcd.com ")
 print()
@@ -64,5 +78,5 @@ ans = input("Do you want to download all comics or new ones only ? (A/N) : ").st
 if ans == 'A':
     downloadAll('https://xkcd.com/1/' , 'https://xkcd.com')
 elif ans == 'N':
-    downloadAll('https://xkcd.com')
+    downloadAll('https://xkcd.com/1/' , 'https://xkcd.com')
 
