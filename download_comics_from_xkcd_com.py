@@ -64,8 +64,9 @@ def downloadNew(firstUrl , lastUrl):           # this function will download any
     end = end[9].split('/')
     end = int(end[1])
 
-    dataPath = input("Enter the path of folder to save images : ")
-    start = dataPath.read().strip()
+    dataPath = input("Enter the path of data of downloaded images : ")
+    Path = open(dataPath + '/data' , 'r')
+    start = Path.read().strip()
 
     downloadImages(start , end , firstUrl)
 
@@ -78,5 +79,5 @@ ans = input("Do you want to download all comics or new ones only ? (A/N) : ").st
 if ans == 'A':
     downloadAll('https://xkcd.com/1/' , 'https://xkcd.com')
 elif ans == 'N':
-    downloadAll('https://xkcd.com/1/' , 'https://xkcd.com')
+    downloadNew('https://xkcd.com/1/' , 'https://xkcd.com')
 
