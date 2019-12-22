@@ -64,9 +64,9 @@ def downloadNew(firstUrl , lastUrl):           # this function will download any
     end = end[9].split('/')
     end = int(end[1])
 
-    dataPath = input("Enter the path of data of downloaded images : ")
-    Path = open(dataPath + '/data' , 'r')
-    start = Path.read().strip()
+    dataPath = input("Enter the path of data of downloaded images : ")      # asks the user for the location of the file 'data'
+    Path = open(dataPath + '/data' , 'r')                   # opens the file 'data' to read its contents
+    start = Path.read().strip()                     # extracts the last image number downloaded
 
     downloadImages(start , end , firstUrl)
 
