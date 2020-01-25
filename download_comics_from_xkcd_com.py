@@ -10,7 +10,7 @@ def downloadImages(start , end , firstUrl):
     for i in range( int(start) , end + 1 ):
         link = firstUrl[0] + '//' + firstUrl[2] + '/' + str(i) + '/'        # creates link page of each commic in site from start to finish
         res1 = requests.get(link)
-        res1.raise_for_status()                                         # ! ISSUE 1
+        res1.raise_for_status()                                         # ! ISSUE 2
 
         soup = bs4.BeautifulSoup(res1.text , 'html.parser')             # parses only the html content of the filr 'res1'
         Comicelem = soup.select("#comic > img")
@@ -65,7 +65,7 @@ def downloadNew(firstUrl , lastUrl):           # this function will download any
     end = int(end[1])
 
     dataPath = input("Enter the path of data of downloaded images : ")      # asks the user for the location of the file 'data'
-    Path = open(dataPath + '/data' , 'r')                       # ! ISSUE 2      # opens the file 'data' to read its contents
+    Path = open(dataPath + '/data' , 'r')                       # ! ISSUE 3      # opens the file 'data' to read its contents
     start = Path.read().strip()                     # extracts the last image number downloaded
 
     downloadImages(start , end , firstUrl)
